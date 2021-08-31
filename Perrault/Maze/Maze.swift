@@ -8,55 +8,58 @@
 import CoreGraphics
 import UIKit
 
-class MAZE {
+struct UCoord {
+    var x : Int
+    var y : Int
     
-    struct UCoord {
-        var x : Int
-        var y : Int
-        
-        mutating func set ( cx : Int, cy: Int ) {
-            x = cx
-            y = cy
-        }
+    mutating func set ( cx : Int, cy: Int ) {
+        x = cx
+        y = cy
     }
+}
+
+// cardinal directions
+let SOUTH = 0
+let WEST  = 1
+let NORTH = 2
+let EAST  = 3
+
+// 1 << (cardinal_direction)
+let SOUTH_BIT = 1
+let WEST_BIT  = 2
+let NORTH_BIT = 4
+let EAST_BIT  = 8
+
+//this.EdgeStr = ["S", "W", "N", "E"];
+let EdgeBit    = [1, 2, 4, 8]
+let OppEdgeBit = [4, 8, 1, 2]
+let XEdge      = [0, -1, 0, 1]
+let YEdge      = [-1, 0, 1, 0]
+let EdgeIndx   = [[-1,  0, -1],
+                  [ 1, -1,  3],
+                  [-1,  2, -1]]
+
+class Maze {
     
+   
     let revision =  "r03"
 
-    // cardinal directions
-    let SOUTH = 0
-    let WEST  = 1
-    let NORTH = 2
-    let EAST  = 3
-
-    // 1 << (cardinal_direction)
-    let SOUTH_BIT = 1
-    let WEST_BIT  = 2
-    let NORTH_BIT = 4
-    let EAST_BIT  = 8
-
-    //this.EdgeStr = ["S", "W", "N", "E"];
-    let EdgeBit    = [1, 2, 4, 8]
-    let OppEdgeBit = [4, 8, 1, 2]
-    let XEdge      = [0, -1, 0, 1]
-    let YEdge      = [-1, 0, 1, 0]
-    let EdgeIndx   = [[-1,  0, -1],
-                      [ 1, -1,  3],
-                      [-1,  2, -1]]
-
-    private var _neighbors    : [UCoord]
-    private var _cells        : [UInt8]
-    private var _maxNeighbors : Int
-    private var _row : Int
-    private var _col : Int
-    private var _seedX : Int
-    private var _seedY : Int
-    private var _coord : UCoord
+    var neighbors    : [UCoord]
+    var cells        : [UInt8]
+    var maxNeighbors : Int = 0
+    var nRow : Int = 0
+    var nCol : Int = 0
+    var seedX : Int = 0
+    var seedY : Int = 0
+    var coord : UCoord = UCoord( x: 0, y: 0)
 
     /**
      * Initialize the parameters that control the maze-building
      * process.
      */
     init () {
+        neighbors = []
+        cells = []
     }
 
     /**
@@ -65,20 +68,20 @@ class MAZE {
      * @param seedX - x-index of seed cell
      * @param seedY - y-index of seed cell
      */
-    func create ( col : Int, row : Int, seedX : Int, seedY : Int ) {
+    func create ( col : Int, row : Int, sX : Int, sY : Int ) {
        
-    _neighbors = [];
-    _maxNeighbors = 0;	// just for info's sake
+    neighbors = [];
+    maxNeighbors = 0;	// just for info's sake
 
-    _row = row;         // actual number of rows in maze
-    _col = col;         // actual number of cols in maze
+    nRow = row;         // actual number of rows in maze
+    nCol = col;         // actual number of cols in maze
 
-    _cells = [UInt8](repeating: 0, count: _row * _col)
+    cells = [UInt8](repeating: 0, count: row * col)
 
-    _seedX = seedX;
-    _seedY = seedY;
+    seedX = sX;
+    seedY = sY;
 
-    _cells[seedY * _row + seedX] = 0xff;
+    cells[seedY * row + seedX] = 0xff;
 
     /*
     this.random = [
@@ -127,21 +130,21 @@ class MAZE {
      */
     func build () {
 
-        _coord.set( cx: _seedX, cy: _seedY )
+        var coord : UCoord = UCoord(x: seedX, y: seedY)
 
         repeat {
 
-            findNeighbors( coord: _coord )
+            findNeighbors( curCoord: coord )
 
-            let k = Int.random(in: 0..<_neighbors.count)
-            _coord = _neighbors.remove(at: k)
+            let k = Int.random(in: 0..<neighbors.count)
+            coord = neighbors.remove(at: k)
 
             //console.log("Dissolving edge for current cell: " + coord.x.toFixed(0) + " " +
             //      coord.y.toFixed() + " k: "  + k.toFixed(2));
 
-            dissolveEdge( coord: _coord )
+            dissolveEdge( coord: coord )
             
-        } while (_neighbors.count > 0)
+        } while (neighbors.count > 0)
     }
 
     /**
@@ -151,30 +154,31 @@ class MAZE {
      * @param x - current index into the array
      * @param y
      */
-    func findNeighbors (  coord: UCoord ) {
+    func findNeighbors (  curCoord: UCoord ) {
 
         var zx : Int
         var zy : Int
+        var coord : UCoord = UCoord(x: curCoord.x, y: curCoord.y)
 
         for  i in 0..<4  {
 
-            zx = Int(_coord.x) + XEdge[i];
-            zy = Int(_coord.y) + YEdge[i];
+            zx = Int(coord.x) + XEdge[i];
+            zy = Int(coord.y) + YEdge[i];
 
             // if indicies in range and cell still zero then the cell is still in the "src list"
-            if (zx >= 0 && zx < _col && zy >= 0 && zy < _row
-                        && _cells[zy * Int(_row) + zx] == 0) {
+            if (zx >= 0 && zx < nCol && zy >= 0 && zy < nRow
+                        && cells[zy * Int(nRow) + zx] == 0) {
 
                 // set the upper bits to indicate that this cell has been "found"
-                _cells[zy * Int(_row) + zx] = 0xf0;
+                cells[zy * Int(nRow) + zx] = 0xf0;
 
-                _coord.x = zx
-                _coord.y = zy
-                _neighbors.append( _coord );
+                coord.x = zx
+                coord.y = zy
+                neighbors.append( coord );
 
                 //console.log("Adding to neighbors: " + zx.toFixed(0) + " " + zy.toFixed(0));
 
-                _maxNeighbors = max( _maxNeighbors, _neighbors.count );
+                maxNeighbors = max( maxNeighbors, neighbors.count );
             }
         }
     }
@@ -194,12 +198,12 @@ class MAZE {
     func dissolveEdge ( coord: UCoord ) {
 
         var		edg     : Int
-        var     edgeRay : [Int]
+        var     edgeRay : [Int] = []
         var		zx,zy   : Int
         var     cellVal : UInt8
 
         // build the fence for this cell
-        _cells[Int(coord.y) * Int(_row) + Int(coord.x)] = 0xff;
+        cells[Int(coord.y) * Int(nRow) + Int(coord.x)] = 0xff;
 
         for i in 0..<4 {
 
@@ -208,9 +212,9 @@ class MAZE {
 
             // if indicies in range and cell has been visited, push it on the local stack
             let oppEdg = Int(OppEdgeBit[i])
-            cellVal = UInt8(Int(_cells[zy * _row + zx]) & oppEdg)
+            cellVal = UInt8(Int(cells[zy * nRow + zx]) & oppEdg)
 
-            if ( zx >= 0 && zx < _col && zy >= 0 && zy < _row && cellVal != 0 ) {
+            if ( zx >= 0 && zx < nCol && zy >= 0 && zy < nRow && cellVal != 0 ) {
 
                 edgeRay.append( i );
             }
@@ -223,8 +227,8 @@ class MAZE {
             zx  = coord.x + XEdge[edg];
             zy  = coord.y + YEdge[edg];
 
-            _cells[coord.y * _row + coord.x]   ^= UInt8(EdgeBit[edg])
-            _cells[zy * _row + zx] ^= UInt8(OppEdgeBit[edg])
+            cells[coord.y * nRow + coord.x]   ^= UInt8(EdgeBit[edg])
+            cells[zy * nRow + zx] ^= UInt8(OppEdgeBit[edg])
 
             //console.log("In cell " + x.toFixed(0) + " " + y.toFixed(0) +
              //   " dissolving edge: " + this.EdgeStr[edg] + " into cell: " + zx.toFixed(0) + " " + zy.toFixed(0));
@@ -236,7 +240,7 @@ class MAZE {
      * @param edg
      */
     func dissolveExit ( edg : Int ) {
-        _cells[_seedY * _row + _seedX]   ^= UInt8(EdgeBit[edg])
+        cells[seedY * nRow + seedX]   ^= UInt8(EdgeBit[edg])
     }
     
     /**
@@ -252,6 +256,13 @@ class MAZE {
     }
  */
     
+    /*
+     *
+     */
+    func drawEvent ( description : String, posx : Int, posy : Int, msx : Int, msy : Int, stackDepth : Int, bSac : Bool ) {
+        
+    }
+    
     /**
      * @param col
      * @param row
@@ -260,10 +271,10 @@ class MAZE {
         for i in 0..<row  {
             for j in 0..<col {
             
-                var mz = _cells[i * _row + j]
-                print(i + " " + j +
-                    " S: " + (mz & MAZE.SOUTH_BIT) + " W: " + (mz & MAZE.WEST_BIT) +
-                    " N: " + (mz & MAZE.NORTH_BIT) + " E: " + (mz & MAZE.EAST_BIT)  )
+                var mz = cells[i * row + j]
+                //print(i + " " + j )
+                  //  " S: " + (mz & SOUTH_BIT) + " W: " + (mz & WEST_BIT) +
+                  //  " N: " + (mz & NORTH_BIT) + " E: " + (mz & EAST_BIT)  )
             }
         }
     }

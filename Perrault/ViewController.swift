@@ -20,6 +20,14 @@ class ViewController: UIViewController {
      */
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        create3DView()
+    }
+
+    /*
+     *
+     */
+    func create3DView () {
         
         _scene = SKScene()
         _scene.create()
@@ -34,7 +42,15 @@ class ViewController: UIViewController {
         _sceneView.isHidden = false
         self.view = _sceneView
     }
-
+    
+    /*
+     *
+     */
+    func create2DView () {
+        
+        var scene2D = Scene2D()
+    }
+    
     /*
      *
      */
