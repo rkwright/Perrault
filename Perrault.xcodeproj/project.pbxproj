@@ -14,7 +14,7 @@
 		5534253926D956980089F109 /* SKScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5534253526D956980089F109 /* SKScene.swift */; };
 		5534253A26D956980089F109 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5534253626D956980089F109 /* ViewController.swift */; };
 		5534253B26D956980089F109 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5534253726D956980089F109 /* AppDelegate.swift */; };
-		5534253C26D956980089F109 /* BaseNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5534253826D956980089F109 /* BaseNode.swift */; };
+		5534253C26D956980089F109 /* Scene3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5534253826D956980089F109 /* Scene3D.swift */; };
 		5534254326D958640089F109 /* Maze.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5534254026D958640089F109 /* Maze.swift */; };
 		5534254426D958640089F109 /* MazeRat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5534254126D958640089F109 /* MazeRat.swift */; };
 		5534254526D958640089F109 /* MazeTest.html in Resources */ = {isa = PBXBuildFile; fileRef = 5534254226D958640089F109 /* MazeTest.html */; };
@@ -31,7 +31,7 @@
 		5534253526D956980089F109 /* SKScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKScene.swift; sourceTree = "<group>"; };
 		5534253626D956980089F109 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5534253726D956980089F109 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5534253826D956980089F109 /* BaseNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseNode.swift; sourceTree = "<group>"; };
+		5534253826D956980089F109 /* Scene3D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene3D.swift; sourceTree = "<group>"; };
 		5534254026D958640089F109 /* Maze.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Maze.swift; sourceTree = "<group>"; };
 		5534254126D958640089F109 /* MazeRat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MazeRat.swift; sourceTree = "<group>"; };
 		5534254226D958640089F109 /* MazeTest.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = MazeTest.html; sourceTree = "<group>"; };
@@ -70,14 +70,14 @@
 			children = (
 				5534253F26D958640089F109 /* Maze */,
 				5534253726D956980089F109 /* AppDelegate.swift */,
-				5534253826D956980089F109 /* BaseNode.swift */,
+				5534255326DE99740089F109 /* Scene2D.swift */,
+				5534253826D956980089F109 /* Scene3D.swift */,
+				5534252026D9562E0089F109 /* SceneDelegate.swift */,
 				5534253526D956980089F109 /* SKScene.swift */,
 				5534253626D956980089F109 /* ViewController.swift */,
-				5534252026D9562E0089F109 /* SceneDelegate.swift */,
-				5534252426D9562E0089F109 /* Main.storyboard */,
 				5534252726D956310089F109 /* Assets.xcassets */,
 				5534252926D956310089F109 /* LaunchScreen.storyboard */,
-				5534255326DE99740089F109 /* Scene2D.swift */,
+				5534252426D9562E0089F109 /* Main.storyboard */,
 				5534252C26D956310089F109 /* Info.plist */,
 			);
 			path = Perrault;
@@ -164,7 +164,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5534253C26D956980089F109 /* BaseNode.swift in Sources */,
+				5534253C26D956980089F109 /* Scene3D.swift in Sources */,
 				5534253B26D956980089F109 /* AppDelegate.swift in Sources */,
 				5534254326D958640089F109 /* Maze.swift in Sources */,
 				5534254426D958640089F109 /* MazeRat.swift in Sources */,

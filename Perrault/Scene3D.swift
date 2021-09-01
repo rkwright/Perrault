@@ -8,7 +8,7 @@ import SceneKit
 
 //-----------------------------------------------------------------------------
 
-class BaseNode : SCNNode {
+class Scene3D : SCNNode {
     
     /*
      * Initialisation

@@ -11,7 +11,7 @@ import SceneKit
 
 class SKScene: SCNScene, SCNSceneRendererDelegate, SCNPhysicsContactDelegate {
     
-    private var _baseNode: BaseNode?
+    private var _baseNode: Scene3D?
  
     /*
      * Perform any creation tasks needed.
@@ -25,7 +25,7 @@ class SKScene: SCNScene, SCNSceneRendererDelegate, SCNPhysicsContactDelegate {
      * Create and add the base node which is the root node of the whole thing
      */
     private func addBaseNode() {
-        _baseNode = BaseNode()
+        _baseNode = Scene3D()
         self.rootNode.addChildNode(_baseNode!)
         
         // dumpSCNNode(node: self.rootNode)
