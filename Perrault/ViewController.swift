@@ -13,7 +13,7 @@ class ViewController: UIViewController {
 
     private var _sceneView :    SCNView!
     private var _scene :        SKScene!
-    var spawnTime :             TimeInterval = 0
+    private var spawnTime :     TimeInterval = 0
 
     /*
      * ViewController life cycle
@@ -21,8 +21,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-       // create3DView()
-    create2DView()
+     //   create3DView()
+        create2DView()
     }
 
     /*
@@ -45,10 +45,8 @@ class ViewController: UIViewController {
     }
     
     override func loadView() {
-        let view = Scene2D()
-        view.backgroundColor = .white
-           
-        self.view = view
+        
+ 
     }
     
     /*
@@ -57,6 +55,10 @@ class ViewController: UIViewController {
     func create2DView () {
         
        // var scene2D = Scene2D()
+        let view = Scene2D()
+        view.backgroundColor = .white
+           
+        self.view = view
     }
     
     /*
