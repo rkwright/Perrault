@@ -21,7 +21,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        create3DView()
+       // create3DView()
+    create2DView()
     }
 
     /*
@@ -43,12 +44,19 @@ class ViewController: UIViewController {
         self.view = _sceneView
     }
     
+    override func loadView() {
+        let view = Scene2D()
+        view.backgroundColor = .white
+           
+        self.view = view
+    }
+    
     /*
      *
      */
     func create2DView () {
         
-        var scene2D = Scene2D()
+       // var scene2D = Scene2D()
     }
     
     /*

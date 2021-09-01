@@ -9,7 +9,18 @@ import UIKit
 
 class Scene2D: UIView {
 
+    override init ( frame: CGRect )
+    {
+        super.init(frame: frame )
+    }
     
+    /*
+     * Compiler-supplied required function.  Only needed if one uses storyboards.
+     */
+    required init(coder: NSCoder) {
+        fatalError("Not using storyboards!")
+    }
+
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func draw( _ rect: CGRect ) {
@@ -28,5 +39,4 @@ class Scene2D: UIView {
         context?.strokePath()
     }
    
-
 }

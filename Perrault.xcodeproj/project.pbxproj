@@ -68,7 +68,6 @@
 		5534251D26D9562E0089F109 /* Perrault */ = {
 			isa = PBXGroup;
 			children = (
-				5534255326DE99740089F109 /* Scene2D.swift */,
 				5534253F26D958640089F109 /* Maze */,
 				5534253726D956980089F109 /* AppDelegate.swift */,
 				5534253826D956980089F109 /* BaseNode.swift */,
@@ -78,6 +77,7 @@
 				5534252426D9562E0089F109 /* Main.storyboard */,
 				5534252726D956310089F109 /* Assets.xcassets */,
 				5534252926D956310089F109 /* LaunchScreen.storyboard */,
+				5534255326DE99740089F109 /* Scene2D.swift */,
 				5534252C26D956310089F109 /* Info.plist */,
 			);
 			path = Perrault;
@@ -185,6 +185,7 @@
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		5534252926D956310089F109 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
