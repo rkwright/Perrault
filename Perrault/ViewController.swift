@@ -21,12 +21,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-     //   create3DView()
+        //   create3DView()
+        
         create2DView()
     }
 
     /*
-     *
+     * Create the 3D view by creating a SceneKit "scene"
      */
     func create3DView () {
         
@@ -44,17 +45,12 @@ class ViewController: UIViewController {
         self.view = _sceneView
     }
     
-    override func loadView() {
-        
- 
-    }
-    
     /*
-     *
+     * The 2D view is simply a white background.  Drawing is done
+     * via Quartz/CoreGrapgics
      */
     func create2DView () {
         
-       // var scene2D = Scene2D()
         let view = Scene2D()
         view.backgroundColor = .white
            

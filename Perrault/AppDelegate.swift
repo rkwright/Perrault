@@ -24,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _window = UIWindow(frame: UIScreen.main.bounds)
         _window?.rootViewController = _viewController
         _window?.makeKeyAndVisible()
+        
+        print("App finished launching")
     }
 
     /*

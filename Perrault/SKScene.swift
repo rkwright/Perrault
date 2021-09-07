@@ -11,22 +11,22 @@ import SceneKit
 
 class SKScene: SCNScene, SCNSceneRendererDelegate, SCNPhysicsContactDelegate {
     
-    private var _baseNode: Scene3D?
+    private var _sceneNode: Scene3D?
  
     /*
      * Perform any creation tasks needed.
      */
     func create() {
 
-        addBaseNode()
+        addSceneNode()
     }
     
     /*
      * Create and add the base node which is the root node of the whole thing
      */
-    private func addBaseNode() {
-        _baseNode = Scene3D()
-        self.rootNode.addChildNode(_baseNode!)
+    private func addSceneNode() {
+        _sceneNode = Scene3D()
+        self.rootNode.addChildNode(_sceneNode!)
         
         // dumpSCNNode(node: self.rootNode)
     }
@@ -36,7 +36,6 @@ class SKScene: SCNScene, SCNSceneRendererDelegate, SCNPhysicsContactDelegate {
      */
     override init() {
         super.init()
-        
         
         // Camera Node
         let cameraNode = SCNNode()
