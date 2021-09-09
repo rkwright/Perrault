@@ -21,9 +21,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        create3DView()
+        //create3DView()
         
-        //create2DView()
+        create2DView()
     }
 
     /*
