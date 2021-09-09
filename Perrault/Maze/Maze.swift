@@ -271,8 +271,8 @@ class Maze {
         for i in 0..<row  {
             for j in 0..<col {
             
-                var mz = cells[i * row + j]
-                //print(i + " " + j )
+                let mz = cells[i * row + j]
+                print(i, " ", j , " ", mz)
                   //  " S: " + (mz & SOUTH_BIT) + " W: " + (mz & WEST_BIT) +
                   //  " N: " + (mz & NORTH_BIT) + " E: " + (mz & EAST_BIT)  )
             }

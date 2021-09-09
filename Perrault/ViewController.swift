@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     private var _sceneView :    SCNView!
     private var _scene :        SKScene!
     private var spawnTime :     TimeInterval = 0
+    private var basin :         Basin!
 
     /*
      * ViewController life cycle
@@ -24,6 +25,8 @@ class ViewController: UIViewController {
         //create3DView()
         
         create2DView()
+        
+        createBasin()
     }
 
     /*
@@ -55,6 +58,14 @@ class ViewController: UIViewController {
         view.backgroundColor = .white
            
         self.view = view
+    }
+    
+    /*
+     *
+     */
+    func createBasin() {
+    
+        basin = Basin()
     }
     
     /*

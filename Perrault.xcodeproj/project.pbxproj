@@ -19,6 +19,7 @@
 		5534254426D958640089F109 /* MazeRat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5534254126D958640089F109 /* MazeRat.swift */; };
 		5534254526D958640089F109 /* MazeTest.html in Resources */ = {isa = PBXBuildFile; fileRef = 5534254226D958640089F109 /* MazeTest.html */; };
 		5534255426DE99740089F109 /* Scene2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5534255326DE99740089F109 /* Scene2D.swift */; };
+		55A8430426EAAE9700F8E3D1 /* Basin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A8430326EAAE9700F8E3D1 /* Basin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		5534254126D958640089F109 /* MazeRat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MazeRat.swift; sourceTree = "<group>"; };
 		5534254226D958640089F109 /* MazeTest.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = MazeTest.html; sourceTree = "<group>"; };
 		5534255326DE99740089F109 /* Scene2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene2D.swift; sourceTree = "<group>"; };
+		55A8430326EAAE9700F8E3D1 /* Basin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Basin.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 		5534251D26D9562E0089F109 /* Perrault */ = {
 			isa = PBXGroup;
 			children = (
+				55A8430226EAAE7B00F8E3D1 /* Basin */,
 				5534253F26D958640089F109 /* Maze */,
 				5534253726D956980089F109 /* AppDelegate.swift */,
 				5534255326DE99740089F109 /* Scene2D.swift */,
@@ -91,6 +94,14 @@
 				5534254226D958640089F109 /* MazeTest.html */,
 			);
 			path = Maze;
+			sourceTree = "<group>";
+		};
+		55A8430226EAAE7B00F8E3D1 /* Basin */ = {
+			isa = PBXGroup;
+			children = (
+				55A8430326EAAE9700F8E3D1 /* Basin.swift */,
+			);
+			path = Basin;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -172,6 +183,7 @@
 				5534253A26D956980089F109 /* ViewController.swift in Sources */,
 				5534253926D956980089F109 /* SKScene.swift in Sources */,
 				5534252126D9562E0089F109 /* SceneDelegate.swift in Sources */,
+				55A8430426EAAE9700F8E3D1 /* Basin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
