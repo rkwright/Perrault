@@ -8,8 +8,12 @@
 import Foundation
 
 class Basin {
+    private var  maze : Maze
     
     init () {
         
+        maze = Maze()
+        maze.create(col: 4, row: 4, sX: 0, sY: 0)
+        maze.build();
     }
 }

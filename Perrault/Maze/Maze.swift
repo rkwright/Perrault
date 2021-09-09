@@ -145,6 +145,8 @@ class Maze {
             dissolveEdge( coord: coord )
             
         } while (neighbors.count > 0)
+        
+        dumpEdges(col: nCol, row: nRow)
     }
 
     /**
@@ -212,11 +214,15 @@ class Maze {
 
             // if indicies in range and cell has been visited, push it on the local stack
             let oppEdg = Int(OppEdgeBit[i])
-            cellVal = UInt8(Int(cells[zy * nRow + zx]) & oppEdg)
 
-            if ( zx >= 0 && zx < nCol && zy >= 0 && zy < nRow && cellVal != 0 ) {
+            if ( zx >= 0 && zx < nCol && zy >= 0 && zy < nRow ) {
 
-                edgeRay.append( i );
+                cellVal = UInt8(Int(cells[zy * nRow + zx]) & oppEdg)
+
+                if (cellVal != 0) {
+                
+                    edgeRay.append( i )
+                }
             }
         }
 
@@ -272,9 +278,11 @@ class Maze {
             for j in 0..<col {
             
                 let mz = cells[i * row + j]
-                print(i, " ", j , " ", mz)
-                  //  " S: " + (mz & SOUTH_BIT) + " W: " + (mz & WEST_BIT) +
-                  //  " N: " + (mz & NORTH_BIT) + " E: " + (mz & EAST_BIT)  )
+                
+                print(i, " ", j , " mz: " , mz )
+
+               // print(i, " ", j , " S: " , Int(mz & SOUTH_BIT), " W: ", Int(mz & WEST_BIT),
+               //     " N: " , Int(mz & NORTH_BIT), " E: ", Int(mz & EAST_BIT)  )
             }
         }
     }
