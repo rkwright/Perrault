@@ -35,16 +35,17 @@ class MazeRat  {
     var last_step : Bool = false
 
     var bSingleHit : Bool = false
-    var mask : UInt8 = 0
+    var searchMask : UInt8 = 0
     var stack : [UCoord] = [] 			    // solution search stack
     var mouseStack : [UCoord] = []		    // mouse-values stack
-    var maze : Maze = Maze()
+    //var maze : Maze = Maze()
     //var mazeEvent : (RatInfo)->()
     
+    weak var maze: Maze?
     /**
      *
      */
-    init() {
+    init( ) {
         
     }
     
@@ -52,45 +53,51 @@ class MazeRat  {
      * Init the rat for the search
      * @param mask
      * @param bSingleHit
-     * @param mazeEvent
+     * @param mazeEvent - callback that takes 6 arguments and returns void
      * @returns {boolean}
      */
-    func initSolveObj ( msk : UInt8, bSnglHit : Bool   ) {
+    func initSolveObj ( mask : UInt8, singleHit : Bool, callBack : (String,
+                                                                    Int,
+                                                                    Int,
+                                                                    Int,
+                                                                    Int,
+                                                                    Int,
+                                                                    Bool)->()   ) {
 
-        mask = msk;          // unique mask value for this object
+        searchMask = mask          // unique mask value for this object
 
-        bSingleHit = bSnglHit;
+        bSingleHit = singleHit
         //mazeEvent = mzEvent;
 
         bSuccess = false;			// true if search was successful
         bSac     = false;
 
-        for i in 0..<maze.nRow {
-            for j in 0..<maze.nCol {
-                maze.cells[i * maze.nRow + j] |= 0xf0;
+        for i in 0..<maze!.nRow {
+            for j in 0..<maze!.nCol {
+                maze!.cells[i * maze!.nRow + j] |= 0xf0
             }
         }
 
         // clear stacks
-        stack = []; 			    // solution search stack
-        mouseStack = [];		    // mouse-values stack
+        stack = [];			    // solution search stack
+        mouseStack = []		    // mouse-values stack
 
         // push seed on stack
-        stack.append(UCoord(x: maze.seedX, y: maze.seedY));
+        stack.append(UCoord(x: maze!.seedX, y: maze!.seedY))
     }
         /**
      * Solves the specified maze by using a variant of the 4x4 seed fill.
      */
-    func findSolution ( xexit : Int, yexit : Int ) -> Bool	{
-        targetX = xexit;
-        targetY = yexit;
+    func findSolution ( xExit : Int, yExit : Int ) -> Bool	{
+        targetX = xExit
+        targetY = yExit
 
         // while Stack not empty...
         while ( stack.count > 0 ) {
 
-            solveStep();
+            solveStep()
 
-            updateObject();
+            updateObject()
         }
 
         return bSuccess;
@@ -115,20 +122,20 @@ class MazeRat  {
         // if exit not yet found...
         if ( px != targetX || py != targetY )
         {
-            mazval = maze.cells[py * maze.nRow + px];
+            mazval = maze!.cells[py * maze!.nRow + px];
 
             report(description: "   solveStep", posx: px,  posy: py,  msx: -1,  msy: -1,  stackDepth: stack.count, bSac: false);
 
             // turn off top bit to show this cell has been checked
-            maze.cells[py * maze.nRow + px] ^= mask;
+            maze!.cells[py * maze!.nRow + px] ^= searchMask;
 
             bSac = true
             for k in 0..<4 {
                 zx = px + XEdge[k]
                 zy = py + YEdge[k]
  
-                if ( zx >= 0 && zx < maze.nCol && zy >= 0 && zy < maze.nRow &&
-                      (maze.cells[zy * maze.nRow + zx] & mask) != 0 &&
+                if ( zx >= 0 && zx < maze!.nCol && zy >= 0 && zy < maze!.nRow &&
+                      (maze!.cells[zy * maze!.nRow + zx] & searchMask) != 0 &&
                       ((mazval & (1 << k)) == 0) ) {
                     bSac = false
                     stack.append(UCoord(x: zx, y: zy))
@@ -201,8 +208,8 @@ class MazeRat  {
         // must retrace our steps.  Note that we have to handle the last step
         // specially because the stack is now empty.
         if (last_step) {
-            posx = maze.seedX;
-            posy = maze.seedX;
+            posx = maze!.seedX;
+            posy = maze!.seedX;
         }
         else {
             // set the point to retrace to as the next item on the stack
@@ -211,7 +218,7 @@ class MazeRat  {
         }
 
         // get maze value at that position
-        mazval = maze.cells[posy * maze.nRow + posx];
+        mazval = maze!.cells[posy * maze!.nRow + posx];
 
         repeat  {
             if ( mouseStack.count > 0 ) {

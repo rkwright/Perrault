@@ -25,7 +25,7 @@ The construction of the watershed and stream follow the general pattern:
 After this, the user can choose one or more views of the result, including 3D, 2D and longitudinal profiles.
 
 ## Architecture
-The diagram below shows the overall stucture of the architecture of Perrault.
+The diagram below shows the overall stucture of the architecture of Perrault 
 
 ![Perrault Architecture](doc/PerrArch.svg)
 

@@ -44,6 +44,7 @@ class Maze {
    
     let revision =  "r03"
 
+   // var rat          : MazeRat
     var neighbors    : [UCoord]
     var cells        : [UInt8]
     var maxNeighbors : Int = 0
@@ -53,6 +54,8 @@ class Maze {
     var seedY : Int = 0
     var coord : UCoord = UCoord( x: 0, y: 0)
 
+    let rat : MazeRat
+
     /**
      * Initialize the parameters that control the maze-building
      * process.
@@ -60,8 +63,14 @@ class Maze {
     init () {
         neighbors = []
         cells = []
+        rat = MazeRat()
+        rat.maze = self
     }
 
+    func getRat() -> MazeRat {
+        return rat
+    }
+    
     /**
      * @param col - number of columns in the maze
      * @param row - number of rows in the maze
@@ -70,18 +79,18 @@ class Maze {
      */
     func create ( col : Int, row : Int, sX : Int, sY : Int ) {
        
-    neighbors = [];
-    maxNeighbors = 0;	// just for info's sake
+        neighbors = [];
+        maxNeighbors = 0;	// just for info's sake
 
-    nRow = row;         // actual number of rows in maze
-    nCol = col;         // actual number of cols in maze
+        nRow = row;         // actual number of rows in maze
+        nCol = col;         // actual number of cols in maze
 
-    cells = [UInt8](repeating: 0, count: row * col)
+        cells = [UInt8](repeating: 0, count: row * col)
 
-    seedX = sX;
-    seedY = sY;
+        seedX = sX;
+        seedY = sY;
 
-    cells[seedY * row + seedX] = 0xff;
+        cells[seedY * row + seedX] = 0xff;
 
     /*
     this.random = [
