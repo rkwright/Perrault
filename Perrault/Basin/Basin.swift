@@ -13,12 +13,12 @@ class Basin {
     init () {
         
         maze = Maze()
-        maze.create(col: 4, row: 4, sX: 0, sY: 0)
+        maze.create(col: 3, row: 3, sX: 0, sY: 0)
         maze.build();
         
         let rat = maze.getRat()
         
-        rat.initSolveObj(mask: 0x80, singleHit: false, callBack: report)
+        rat.initSolveObj(mask: 0x80, single: false, callBack: report)
 
         let bSuccess = rat.findSolution( xExit: -1, yExit: -1 );
 
@@ -31,9 +31,11 @@ class Basin {
           //bPath = false;
           //startTime = performance.now();
 
-        rat.initSolveObj(mask: 0x80, singleHit: true, callBack: report);
+        rat.initSolveObj(mask: 0x80, single: true, callBack: report);
 
         let bSolve = rat.findSolution( xExit: -1, yExit: -1);
+
+        print("Maze solved? ", bSolve," maxNeighbors: " , maze.maxNeighbors)
     }
     
     /**

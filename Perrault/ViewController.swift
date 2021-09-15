@@ -11,8 +11,8 @@ import SceneKit
 
 class ViewController: UIViewController {
 
-    private var _sceneView :    SCNView!
-    private var _scene :        SKScene!
+    private var sceneView :    SCNView!
+    private var scene :        SKScene!
     private var spawnTime :     TimeInterval = 0
     private var basin :         Basin!
 
@@ -34,18 +34,18 @@ class ViewController: UIViewController {
      */
     func create3DView () {
         
-        _scene = SKScene()
-        _scene.create()
+        scene = SKScene()
+        scene.create()
         
-        _sceneView = SCNView()
-        _sceneView.scene = _scene
-        _sceneView.delegate = self
-        _sceneView.allowsCameraControl = true
-        _sceneView.showsStatistics = true
-        _sceneView.backgroundColor = UIColor.black
-        _sceneView.isPlaying = true
-        _sceneView.isHidden = false
-        self.view = _sceneView
+        sceneView = SCNView()
+        sceneView.scene = scene
+        sceneView.delegate = self
+        sceneView.allowsCameraControl = true
+        sceneView.showsStatistics = true
+        sceneView.backgroundColor = UIColor.black
+        sceneView.isPlaying = true
+        sceneView.isHidden = false
+        self.view = sceneView
     }
     
     /*

@@ -25,12 +25,12 @@ let NORTH = 2
 let EAST  = 3
 
 // 1 << (cardinal_direction)
-let SOUTH_BIT = 1
-let WEST_BIT  = 2
-let NORTH_BIT = 4
-let EAST_BIT  = 8
+let SOUTH_BIT : UInt8 = 1
+let WEST_BIT  : UInt8 = 2
+let NORTH_BIT : UInt8 = 4
+let EAST_BIT  : UInt8 = 8
 
-//this.EdgeStr = ["S", "W", "N", "E"];
+let EdgeStr = ["S", "W", "N", "E"]
 let EdgeBit    = [1, 2, 4, 8]
 let OppEdgeBit = [4, 8, 1, 2]
 let XEdge      = [0, -1, 0, 1]
@@ -44,7 +44,6 @@ class Maze {
    
     let revision =  "r03"
 
-   // var rat          : MazeRat
     var neighbors    : [UCoord]
     var cells        : [UInt8]
     var maxNeighbors : Int = 0
@@ -56,6 +55,40 @@ class Maze {
 
     let rat : MazeRat
 
+    var randomList: [Double] = [
+    0.7089998792613033,
+    0.2984042827075908,
+    0.151327677518597,
+    0.5311409004659107,
+    0.3592650838882001,
+    0.12786247721616228,
+    0.08303331111448853,
+    0.13022329844710323,
+    0.3901487586026049,
+    0.9507173128886488,
+    0.43746401482808395,
+    0.349821701435554,
+    0.7707404924385883,
+    0.032055300540311915,
+    0.20838748976454724,
+    0.9388920819931408,
+    0.0756514748990138,
+    0.606463251716048,
+    0.7744438337871995,
+    0.8881816498950352,
+    0.6959170586112238,
+    0.7078428113596047,
+    0.9319804811012935,
+    0.3097252899190752,
+    0.30846991398937096,
+    0.9158152580489112,
+    0.6421344322846634,
+    0.5149000577715059,
+    0.7896001483653874,
+    0.5242420736444318,
+    0.344417139647895,
+    0.7072985028307064
+]
     /**
      * Initialize the parameters that control the maze-building
      * process.
@@ -92,43 +125,10 @@ class Maze {
 
         cells[seedY * row + seedX] = 0xff;
 
-    /*
-    this.random = [
-        0.7089998792613033,
-        0.2984042827075908,
-        0.151327677518597,
-        0.5311409004659107,
-        0.3592650838882001,
-        0.12786247721616228,
-        0.08303331111448853,
-        0.13022329844710323,
-        0.3901487586026049,
-        0.9507173128886488,
-        0.43746401482808395,
-        0.349821701435554,
-        0.7707404924385883,
-        0.032055300540311915,
-        0.20838748976454724,
-        0.9388920819931408,
-        0.0756514748990138,
-        0.606463251716048,
-        0.7744438337871995,
-        0.8881816498950352,
-        0.6959170586112238,
-        0.7078428113596047,
-        0.9319804811012935,
-        0.3097252899190752,
-        0.30846991398937096,
-        0.9158152580489112,
-        0.6421344322846634,
-        0.5149000577715059,
-        0.7896001483653874,
-        0.5242420736444318,
-        0.344417139647895,
-        0.7072985028307064
-    ];
+    
 
-    for ( var i=0; i<32; i++ ) {
+
+    /* for ( var i=0; i<32; i++ ) {
         console.log(Math.random() + ",");
     } */
 }
@@ -145,11 +145,11 @@ class Maze {
 
             findNeighbors( curCoord: coord )
 
-            let k = Int.random(in: 0..<neighbors.count)
+            //let k = Int.random(in: 0..<neighbors.count)
+            let k = getRandomInt2(min: 0, max: neighbors.count-1)
             coord = neighbors.remove(at: k)
 
-            //console.log("Dissolving edge for current cell: " + coord.x.toFixed(0) + " " +
-            //      coord.y.toFixed() + " k: "  + k.toFixed(2));
+            print(String( format: "Dissolving edge for current cell: x: %d  y: %d  k: %d",coord.x, coord.y, k))
 
             dissolveEdge( coord: coord )
             
@@ -170,7 +170,9 @@ class Maze {
         var zx : Int
         var zy : Int
         var coord : UCoord = UCoord(x: curCoord.x, y: curCoord.y)
+        var nbr : UCoord = UCoord(x: 0, y:0)
 
+        print(String(format: "Looking for neighbors of %d %d", coord.x, coord.y))
         for  i in 0..<4  {
 
             zx = Int(coord.x) + XEdge[i];
@@ -183,11 +185,11 @@ class Maze {
                 // set the upper bits to indicate that this cell has been "found"
                 cells[zy * Int(nRow) + zx] = 0xf0;
 
-                coord.x = zx
-                coord.y = zy
-                neighbors.append( coord );
+                nbr.x = zx
+                nbr.y = zy
+                neighbors.append( nbr );
 
-                //console.log("Adding to neighbors: " + zx.toFixed(0) + " " + zy.toFixed(0));
+                print(String( format: "Adding to neighbors: %d  %d",zx, zy))
 
                 maxNeighbors = max( maxNeighbors, neighbors.count );
             }
@@ -245,8 +247,7 @@ class Maze {
             cells[coord.y * nRow + coord.x]   ^= UInt8(EdgeBit[edg])
             cells[zy * nRow + zx] ^= UInt8(OppEdgeBit[edg])
 
-            //console.log("In cell " + x.toFixed(0) + " " + y.toFixed(0) +
-             //   " dissolving edge: " + this.EdgeStr[edg] + " into cell: " + zx.toFixed(0) + " " + zy.toFixed(0));
+            print(String( format: "In cell %d  %d dissolving edge %@ into cell %d %d", coord.x, coord.y, EdgeStr[edg],zx, zy))
         }
     }
 
@@ -263,13 +264,14 @@ class Maze {
      * but will NOT include the maximum.  The random value is pulled from a static list of
      * pre-generated list of random values. This is to allow reproducible mazes.
      */
-    /*
-    func getRandomInt2 ( min : Int, max : Int ) {
+    
+    func getRandomInt2 ( min : Int, max : Int ) -> Int {
         let min2 = ceil(Double(min))
         let max2 = floor(Double(max))
-        return floor(random.removeLast() * (max2 - min2)) + min2
+        let val = Int(floor(randomList.removeLast() * (max2 - min2)) + min2)
+        print(" Random2: ", val )
+        return val;
     }
- */
     
     /*
      *
@@ -288,10 +290,13 @@ class Maze {
             
                 let mz = cells[i * row + j]
                 
-                print(i, " ", j , " mz: " , mz )
+                print("x: ", j, " y: ", i , " mz: " , String(mz, radix: 2) )
 
-               // print(i, " ", j , " S: " , Int(mz & SOUTH_BIT), " W: ", Int(mz & WEST_BIT),
-               //     " N: " , Int(mz & NORTH_BIT), " E: ", Int(mz & EAST_BIT)  )
+                let s = Int(mz & SOUTH_BIT)
+                let w = Int(mz & WEST_BIT)
+                let n = Int(mz & NORTH_BIT)
+                let e = Int(mz & EAST_BIT)
+                print(String(format: " S: %d  W: %d  N: %d  E: %d", s, w, n, e)  )
             }
         }
     }

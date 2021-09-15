@@ -4,23 +4,6 @@
  * Copyright 2017, All rights reserved.
  *
  */
-/*
-class RatInfo {
-    //label, rat,  i,  j, nexi, nexj, pathlen, bsac
-    var _label : String
-    var _rat   : MazeRat
-    var _i : Int
-    var _j : Int
-    var _nextI : Int
-    var _nextJ : Int
-    var _pathlen : Float
-    var _bSac : Bool
-      
-    init() {
-        
-    }
-}
- */
 
 class MazeRat  {
 
@@ -34,12 +17,10 @@ class MazeRat  {
     var lastY = -1			    // coords of last cell drawn to
     var last_step : Bool = false
 
-    var bSingleHit : Bool = false
+    var singleHit : Bool = false
     var searchMask : UInt8 = 0
     var stack : [UCoord] = [] 			    // solution search stack
     var mouseStack : [UCoord] = []		    // mouse-values stack
-    //var maze : Maze = Maze()
-    //var mazeEvent : (RatInfo)->()
     
     weak var maze: Maze?
     /**
@@ -56,7 +37,7 @@ class MazeRat  {
      * @param mazeEvent - callback that takes 6 arguments and returns void
      * @returns {boolean}
      */
-    func initSolveObj ( mask : UInt8, singleHit : Bool, callBack : (String,
+    func initSolveObj ( mask : UInt8, single : Bool, callBack : (String,
                                                                     Int,
                                                                     Int,
                                                                     Int,
@@ -66,8 +47,7 @@ class MazeRat  {
 
         searchMask = mask          // unique mask value for this object
 
-        bSingleHit = singleHit
-        //mazeEvent = mzEvent;
+        singleHit = single
 
         bSuccess = false;			// true if search was successful
         bSac     = false;
@@ -134,13 +114,16 @@ class MazeRat  {
                 zx = px + XEdge[k]
                 zy = py + YEdge[k]
  
-                if ( zx >= 0 && zx < maze!.nCol && zy >= 0 && zy < maze!.nRow &&
-                      (maze!.cells[zy * maze!.nRow + zx] & searchMask) != 0 &&
-                      ((mazval & (1 << k)) == 0) ) {
-                    bSac = false
-                    stack.append(UCoord(x: zx, y: zy))
+                if ( zx >= 0 && zx < maze!.nCol && zy >= 0 && zy < maze!.nRow ) {
+                    
+                    let mz = maze!.cells[zy * maze!.nRow + zx];
 
-                    report(description: "    addStack", posx:  px, posy:  py, msx: zx, msy: zy, stackDepth: stack.count, bSac: false);
+                    if ((maze!.cells[zy * maze!.nRow + zx] & searchMask) != 0 && ((mazval & (1 << k)) == 0) ) {
+                        bSac = false
+                        stack.append(UCoord(x: zx, y: zy))
+
+                        report(description: "    addStack", posx:  px, posy:  py, msx: zx, msy: zy, stackDepth: stack.count, bSac: false);
+                    }
                 }
             }
 
@@ -165,7 +148,7 @@ class MazeRat  {
         posy  = ratY
         lastY = ratY
 
-        if ( bSingleHit ) {
+        if ( singleHit ) {
             if ( mouseStack.count > 0) {
                 msx = mouseStack[mouseStack.count-1].x
                 msy = mouseStack[mouseStack.count-1].y
@@ -271,7 +254,6 @@ class MazeRat  {
      * @see com.geofx.example.erosion.MazeEvent#mazeEvent(int, int, int, int, int, boolean)
      */
     func report ( description : String, posx : Int, posy : Int, msx : Int, msy : Int, stackDepth : Int, bSac : Bool  ) {
-        //console.info(description + " posx: " +  posx.toFixed(0) + "  posy: " + posy.toFixed(0) + " msx: " + msx.toFixed(0) +
-        //    " msy: " + msy.toFixed(0) + " depth: " + stackDepth.toFixed(0) + " bSac: " + bSac);
+        print(String(format: "%@  x: %d  y: %d  msx: %d  msy: %d depth: %d  bSac: %d",description, posx, posy, msx, msy, stackDepth, bSac))
     }
 }
