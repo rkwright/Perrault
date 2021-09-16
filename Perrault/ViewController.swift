@@ -15,6 +15,8 @@ class ViewController: UIViewController {
     private var scene :        SKScene!
     private var spawnTime :     TimeInterval = 0
     private var basin :         Basin!
+    private var view2D : Scene2D!
+    private var maz : Maze!
 
     /*
      * ViewController life cycle
@@ -27,6 +29,9 @@ class ViewController: UIViewController {
         create2DView()
         
         createBasin()
+        
+        maz = basin.getMaze()
+        view2D.setMaze(maz: maz )
     }
 
     /*
@@ -54,10 +59,10 @@ class ViewController: UIViewController {
      */
     func create2DView () {
         
-        let view = Scene2D()
-        view.backgroundColor = .white
+        view2D = Scene2D()
+        view2D.backgroundColor = .white
            
-        self.view = view
+        self.view = view2D
     }
     
     /*
