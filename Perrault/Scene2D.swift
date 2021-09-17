@@ -43,13 +43,12 @@ class Scene2D: UIView {
         let color = CGColor(colorSpace: colorSpace, components: components)
         context?.setStrokeColor(color!)
 
-        context?.move(to: CGPoint(x: 30, y: 30))
-        context?.addLine(to: CGPoint(x: 300, y: 400))
+        //UIColor.setStroke(UIColor.red)
         
-        context?.strokePath()
-
-        var px = 20
-        var py = 820
+        print("Drawing the maze, cellSize: ", cellSize)
+        
+        var px = 80
+        var py = 420
         var sKnt = 0
         for i in 0..<maze.nRow {
             for j in 0..<maze.nCol {
@@ -65,14 +64,16 @@ class Scene2D: UIView {
                         context?.move(to: CGPoint(x: px, y: py))
                         context?.addLine(to: CGPoint(x: px + cellSize, y: py))
                         context?.strokePath()
+                        print(String( format: "S: moveTo: %d %d,  lineTo: %d %d", px,py,px+cellSize,py))
                         sKnt += 2;
                     }
 
                     if  ((mz & WEST_BIT) != 0) {
                         context?.beginPath();
-                        context?.move(to: CGPoint(x: px, y: py-cellSize))
+                        context?.move(to: CGPoint(x: px, y: py))
                         context?.addLine(to: CGPoint(x: px, y: py-cellSize))
                         context?.strokePath()
+                        print(String( format: "W: moveTo: %d %d,  lineTo: %d %d", px,py,px,py-cellSize))
                         sKnt += 2;
                     }
 
@@ -81,6 +82,7 @@ class Scene2D: UIView {
                         context?.move(to: CGPoint(x: px, y: py-cellSize))
                         context?.addLine(to: CGPoint(x: px+cellSize, y: py-cellSize))
                         context?.strokePath()
+                        print(String( format: "N: moveTo: %d %d,  lineTo: %d %d", px,py-cellSize,px+cellSize,py-cellSize))
                         sKnt += 2;
                     }
 
@@ -89,13 +91,14 @@ class Scene2D: UIView {
                         context?.move(to: CGPoint(x: px+cellSize, y: py))
                         context?.addLine(to: CGPoint(x: px+cellSize, y: py-cellSize))
                         context?.strokePath()
+                        print(String( format: "E: moveTo: %d %d,  lineTo: %d %d", px+cellSize,py,px+cellSize,py-cellSize))
                         sKnt += 2;
                     }
 
                     px += cellSize;
                 }
 
-                px = 20;
+                px = 80;
                 py -= cellSize;
             }
             print("Drawmaze done! sKnt: ",sKnt);

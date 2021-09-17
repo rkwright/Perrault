@@ -13,7 +13,7 @@ class Basin {
     init () {
         
         maze = Maze()
-        maze.create(col: 3, row: 3, sX: 0, sY: 0)
+        maze.create(col: 16, row: 16, sX: 0, sY: 0)
         maze.build();
         
         let rat = maze.getRat()

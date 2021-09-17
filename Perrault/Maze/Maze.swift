@@ -145,8 +145,8 @@ class Maze {
 
             findNeighbors( curCoord: coord )
 
-            //let k = Int.random(in: 0..<neighbors.count)
-            let k = getRandomInt2(min: 0, max: neighbors.count-1)
+            let k = Int.random(in: 0..<neighbors.count)
+            //let k = getRandomInt2(min: 0, max: neighbors.count-1)
             coord = neighbors.remove(at: k)
 
             print(String( format: "Dissolving edge for current cell: x: %d  y: %d  k: %d",coord.x, coord.y, k))
