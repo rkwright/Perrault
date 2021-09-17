@@ -39,7 +39,7 @@ class Scene2D: UIView {
         context?.setLineWidth(1.0)
         
         let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let components: [CGFloat] = [0.0, 0.0, 1.0, 1.0]
+        let components: [CGFloat] = [0.0, 0.0, 0.0, 1.0]
         let color = CGColor(colorSpace: colorSpace, components: components)
         context?.setStrokeColor(color!)
 
@@ -64,7 +64,7 @@ class Scene2D: UIView {
                         context?.move(to: CGPoint(x: px, y: py))
                         context?.addLine(to: CGPoint(x: px + cellSize, y: py))
                         context?.strokePath()
-                        print(String( format: "S: moveTo: %d %d,  lineTo: %d %d", px,py,px+cellSize,py))
+                        //print(String( format: "S: moveTo: %d %d,  lineTo: %d %d", px,py,px+cellSize,py))
                         sKnt += 2;
                     }
 
@@ -73,7 +73,7 @@ class Scene2D: UIView {
                         context?.move(to: CGPoint(x: px, y: py))
                         context?.addLine(to: CGPoint(x: px, y: py-cellSize))
                         context?.strokePath()
-                        print(String( format: "W: moveTo: %d %d,  lineTo: %d %d", px,py,px,py-cellSize))
+                        //print(String( format: "W: moveTo: %d %d,  lineTo: %d %d", px,py,px,py-cellSize))
                         sKnt += 2;
                     }
 
@@ -82,7 +82,7 @@ class Scene2D: UIView {
                         context?.move(to: CGPoint(x: px, y: py-cellSize))
                         context?.addLine(to: CGPoint(x: px+cellSize, y: py-cellSize))
                         context?.strokePath()
-                        print(String( format: "N: moveTo: %d %d,  lineTo: %d %d", px,py-cellSize,px+cellSize,py-cellSize))
+                        //print(String( format: "N: moveTo: %d %d,  lineTo: %d %d", px,py-cellSize,px+cellSize,py-cellSize))
                         sKnt += 2;
                     }
 
@@ -91,7 +91,7 @@ class Scene2D: UIView {
                         context?.move(to: CGPoint(x: px+cellSize, y: py))
                         context?.addLine(to: CGPoint(x: px+cellSize, y: py-cellSize))
                         context?.strokePath()
-                        print(String( format: "E: moveTo: %d %d,  lineTo: %d %d", px+cellSize,py,px+cellSize,py-cellSize))
+                        //print(String( format: "E: moveTo: %d %d,  lineTo: %d %d", px+cellSize,py,px+cellSize,py-cellSize))
                         sKnt += 2;
                     }
 

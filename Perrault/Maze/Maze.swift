@@ -53,7 +53,7 @@ class Maze {
     var seedY : Int = 0
     var coord : UCoord = UCoord( x: 0, y: 0)
 
-    let rat : MazeRat
+    var rat : MazeRat?
 
     var randomList: [Double] = [
     0.7089998792613033,
@@ -97,11 +97,12 @@ class Maze {
         neighbors = []
         cells = []
         rat = MazeRat()
-        rat.maze = self
+        rat!.maze = self
+        //rat.callback = drawEvent(description:posx:posy:msx:msy:stackDepth:bSac:)
     }
 
     func getRat() -> MazeRat {
-        return rat
+        return rat!
     }
     
     /**

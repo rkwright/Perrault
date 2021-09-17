@@ -23,11 +23,13 @@ class MazeRat  {
     var mouseStack : [UCoord] = []		    // mouse-values stack
     
     weak var maze: Maze?
+    var mazeEvent : ((String, Int, Int, Int, Int, Int, Bool)->())?
+    
     /**
      *
      */
-    init( ) {
-        
+    init()   {
+        //mazeEvent = report
     }
     
     /**
@@ -37,7 +39,7 @@ class MazeRat  {
      * @param mazeEvent - callback that takes 6 arguments and returns void
      * @returns {boolean}
      */
-    func initSolveObj ( mask : UInt8, single : Bool, callBack : (String,
+    func initSolveObj ( mask : UInt8, single : Bool, callBack : @escaping (String,
                                                                     Int,
                                                                     Int,
                                                                     Int,
@@ -62,6 +64,8 @@ class MazeRat  {
         stack = [];			    // solution search stack
         mouseStack = []		    // mouse-values stack
 
+        mazeEvent = callBack
+        
         // push seed on stack
         stack.append(UCoord(x: maze!.seedX, y: maze!.seedY))
     }
@@ -104,7 +108,7 @@ class MazeRat  {
         {
             mazval = maze!.cells[py * maze!.nRow + px];
 
-            report(description: "   solveStep", posx: px,  posy: py,  msx: -1,  msy: -1,  stackDepth: stack.count, bSac: false);
+            mazeEvent!("   solveStep", px,  py,  -1,  -1,  stack.count, false);
 
             // turn off top bit to show this cell has been checked
             maze!.cells[py * maze!.nRow + px] ^= searchMask;
@@ -122,7 +126,7 @@ class MazeRat  {
                         bSac = false
                         stack.append(UCoord(x: zx, y: zy))
 
-                        report(description: "    addStack", posx:  px, posy:  py, msx: zx, msy: zy, stackDepth: stack.count, bSac: false);
+                        mazeEvent!("    addStack", px, py, zx, zy, stack.count, false);
                     }
                 }
             }
