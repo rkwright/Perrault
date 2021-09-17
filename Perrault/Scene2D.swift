@@ -10,6 +10,8 @@ import UIKit
 class Scene2D: UIView {
 
     var maze : Maze?
+    var context :  CGContext?
+    var screenReady : Bool = false
     
     override init ( frame: CGRect ) {
         super.init(frame: frame )
@@ -28,8 +30,20 @@ class Scene2D: UIView {
     }
 
     func drawEvent ( description : String, posX : Int, posY : Int, msX : Int, msY : Int, stackDepth : Int, bSac : Bool  ) {
-          print(String(format: "%@  x: %d  y: %d  msx: %d  msy: %d depth: %d  bSac: %d",description, posX, posY, msX, msY, stackDepth, bSac))
+          print(String(format: "DrawEvent %@  x: %d  y: %d  msx: %d  msy: %d depth: %d  bSac: %d",description, posX, posY, msX, msY, stackDepth, bSac))
+        
+        let cellSize = 400 / maze!.nRow;
+        let px1 = 80 + Int(Double(posX) + 0.5) * cellSize;
+        let py1 = 420 - Int(Double(posY) + 0.5) * cellSize;
+        let px2 = 80 + Int(Double(msX) + 0.5) * cellSize;
+        let py2 = 420 - Int(Double(msY) + 0.5) * cellSize;
 
+        context?.setLineWidth(1.0)
+
+        context?.beginPath()
+        context?.move(to: CGPoint(x: px1, y: py1))
+        context?.addLine(to: CGPoint(x: px2, y: py2))
+        context?.strokePath()
     }
     
     func drawMaze( maze : Maze ) {
@@ -60,7 +74,7 @@ class Scene2D: UIView {
                     //    " N: " + (mz & MAZE.NORTH_BIT) + " E: " + (mz & MAZE.EAST_BIT)  );
 
                     if  ((mz & SOUTH_BIT) != 0) {
-                        context?.beginPath();
+                        context?.beginPath()
                         context?.move(to: CGPoint(x: px, y: py))
                         context?.addLine(to: CGPoint(x: px + cellSize, y: py))
                         context?.strokePath()
@@ -109,7 +123,17 @@ class Scene2D: UIView {
    
     override func draw( _ rect: CGRect ) {
         
-        drawMaze( maze: maze!)
+        //if ( maze!.nCol > 0 || maze!.nRow > 0) {
+    
+            drawMaze( maze: maze!)
+        if (screenReady == false) {
+            screenReady = true
+            
+            let vc: UIViewController = self.parentViewController!
+            print("vc")
+        }
+            //vc.viewReady()
+        //}
         // Drawing code
         /*let context = UIGraphicsGetCurrentContext()
         context?.setLineWidth(2.0)
@@ -124,5 +148,11 @@ class Scene2D: UIView {
         
         context?.strokePath()
          */
+    }
+}
+
+extension UIResponder {
+    public var parentViewController: UIViewController? {
+        return next as? UIViewController ?? next?.parentViewController
     }
 }

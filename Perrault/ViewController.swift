@@ -32,6 +32,9 @@ class ViewController: UIViewController {
         
         maz = basin.getMaze()
         view2D.setMaze(maz: maz )
+        basin.setCallBack( callback: view2D.drawEvent)
+        
+        //basin.build()
     }
 
     /*
@@ -71,6 +74,10 @@ class ViewController: UIViewController {
     func createBasin() {
     
         basin = Basin()
+    }
+    
+    func viewReady() {
+        basin.build()
     }
     
     /*

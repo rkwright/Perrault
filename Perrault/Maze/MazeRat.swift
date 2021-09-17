@@ -8,7 +8,7 @@
 class MazeRat  {
 
     var bSuccess : Bool = false			// true if search was successful
-    var bSac = false				// true if last cell was cul-de-sac
+    var bSac : Bool = false				// true if last cell was cul-de-sac
     var targetX = 0			    // coords of target
     var targetY = 0
     var ratX = 0				        // coords of cell
@@ -108,7 +108,7 @@ class MazeRat  {
         {
             mazval = maze!.cells[py * maze!.nRow + px];
 
-            mazeEvent!("   solveStep", px,  py,  -1,  -1,  stack.count, false);
+            //report(description: "   solveStep", posx: px, posy: py, msx: -1, msy: -1, stackDepth: stack.count, bSac: false);
 
             // turn off top bit to show this cell has been checked
             maze!.cells[py * maze!.nRow + px] ^= searchMask;
@@ -126,7 +126,7 @@ class MazeRat  {
                         bSac = false
                         stack.append(UCoord(x: zx, y: zy))
 
-                        mazeEvent!("    addStack", px, py, zx, zy, stack.count, false);
+                        //report( description: "    addStack", posx: px, posy: py, msx: zx, msy: zy, stackDepth: stack.count, bSac: false);
                     }
                 }
             }
@@ -162,10 +162,8 @@ class MazeRat  {
                 msy = -1
             }
 
-           // if (mazeEvent != nil) {
-            //
-            //    mazeEvent( "updateObject", posy, posx, msy, msx, mouseStack.length, bSac );
-            //}
+           mazeEvent!( "updateObject", posy, posx, msy, msx, mouseStack.count, bSac );
+            
         }
 
         // if cul-de-sac then re-trace "steps"
@@ -214,9 +212,9 @@ class MazeRat  {
                 msx = coord.x;
                 msy = coord.y;
 
-               // if ( !bSingleHit && mazeEvent != nil) {
-               //     mazeEvent( "retraceSteps", maze, lastY, lastX, msy, msx, stack.count, bSac )
-               // }
+               if ( !singleHit ) {
+                    mazeEvent!( "retraceSteps", lastY, lastX, msy, msx, stack.count, bSac )
+               }
 
                 // only the first cell is a real cul-de-sac, so clear the local flag
     			bSac = false
@@ -258,6 +256,6 @@ class MazeRat  {
      * @see com.geofx.example.erosion.MazeEvent#mazeEvent(int, int, int, int, int, boolean)
      */
     func report ( description : String, posx : Int, posy : Int, msx : Int, msy : Int, stackDepth : Int, bSac : Bool  ) {
-        print(String(format: "%@  x: %d  y: %d  msx: %d  msy: %d depth: %d  bSac: %d",description, posx, posy, msx, msy, stackDepth, bSac))
+        print(String(format: "Report: %@  x: %d  y: %d  msx: %d  msy: %d depth: %d  bSac: %d",description, posx, posy, msx, msy, stackDepth, bSac))
     }
 }
