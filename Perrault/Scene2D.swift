@@ -123,32 +123,16 @@ class Scene2D: UIView {
    
     override func draw( _ rect: CGRect ) {
         
-        //if ( maze!.nCol > 0 || maze!.nRow > 0) {
+        if ( maze!.nCol > 0 || maze!.nRow > 0) {
     
             drawMaze( maze: maze!)
-        if (screenReady == false) {
             screenReady = true
+            //setNeedsDisplay()
             
-            let vc: UIViewController = self.parentViewController!
-            print("vc")
+            //let vc: UIViewController = self.parentViewController!
+            //print("vc")
         }
-            //vc.viewReady()
-        //}
-        // Drawing code
-        /*let context = UIGraphicsGetCurrentContext()
-        context?.setLineWidth(2.0)
-        
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let components: [CGFloat] = [0.0, 0.0, 1.0, 1.0]
-        let color = CGColor(colorSpace: colorSpace, components: components)
-        context?.setStrokeColor(color!)
-
-        context?.move(to: CGPoint(x: 30, y: 30))
-        context?.addLine(to: CGPoint(x: 300, y: 400))
-        
-        context?.strokePath()
-         */
-    }
+     }
 }
 
 extension UIResponder {

@@ -37,6 +37,13 @@ class ViewController: UIViewController {
         //basin.build()
     }
 
+    override func viewDidAppear( _ animated: Bool ) {
+        super.viewDidAppear( animated )
+        print("View appeared")
+        basin.build()
+        view2D.setNeedsDisplay()
+    }
+
     /*
      * Create the 3D view by creating a SceneKit "scene"
      */
