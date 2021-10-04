@@ -4,14 +4,14 @@
 ## Introduction
 Perrault is a relatively simple simulation of a watershed.  It builds the catchment (details below), constructs the topography, and renders the result in either 2D or 3D.  It also can run a hydrologic simulation of the basin, routing the rainfall, estimating evapotranspiration, etc.  
 
-[Pierre Perrault](https://en.wikipedia.org/wiki/Pierre_Perrault_(scientist)) (1608-1680) was a French bureaucrat and scientist.  He is generally credited as the first to correctly describe the hydrologic cycle.  He maintained, against criticism, that the rainfall in the Parisian basin was sufficient to explain the rate of flow in the Seine.  He estimated the flow of the Seine and showed that the rainfall in the basin was more than sufficient to explain the flow in the Seine.
+> [Pierre Perrault](https://en.wikipedia.org/wiki/Pierre_Perrault_(scientist)) (1608-1680) was a French bureaucrat and scientist.  He is generally credited as the first to correctly describe the hydrologic cycle.  He maintained, against criticism, that the rainfall in the Parisian basin was sufficient to explain the rate of flow in the Seine.  He estimated the flow of the Seine and showed that the rainfall in the basin was more than sufficient to explain the flow in the Seine.
 
 ## Approach
 The basic approach of this app is to describe the watershed as a rectangular mesh. The app uses a variant of the 4x4 seed-fill to determine the bounds of all the sub-basins (down to first order). A constuct named the "MazeRat" is then used to recursively walk the spanning tree. At each critical point, the Rat has a callback (provided by the caller) that allows the caller to use the Rat's info. The callback can be made when the Rat is ascending the tree or retracing its steps back down.
 
 Due to the nature of the 4x4 seed fill, the algorithm used (*thank you Jack Bresenham*) has two important aspects or behaviours:
 
-- If acending is TRUE, then the callback function will be called ONCE and ONLY ONCE per cell in the part of the net visited
+- If ascending is TRUE, then the callback function will be called ONCE and ONLY ONCE per cell in the part of the net visited
 - If ascending is FALSE, then the call back function will be called ONCE per elm it is LEAVING (prevx,prevy) but will be called more than once for each cell (since many cells have more than one entrance/exit)
 
 These callbacks have several applications: 
@@ -19,7 +19,7 @@ These callbacks have several applications:
 - a callback can be used to draw the spanning tree, i.e. the stream network for the 2D view
 - a separate callback can be used to draw the spanning tree in the 3D view
 - when the rat is ascending the tree it is guaranteed that each cell will be visited only once so the info is useful for topographical calculations
-- when descending ("retracing steps") the data can be used to determine catchment size and other aspects of the morphology of the spanning tree, i.e the stream network
+- when descending ("retracing steps") the data can be used to determine catchment area and other aspects of the morphology of the spanning tree, i.e the stream network
 - the callbacks can be used to provide info for debugging
 
 The construction of the watershed and stream follow the general pattern:
@@ -63,9 +63,6 @@ The object which manages all the objects which comprise the basin, including the
 
 ### BasinTopo
 The object that constructs the actual topography. The BasinTopo object takes the Maze and the GeoCells and walks the basin to determine the height of the channels and interfluves.
-
-### Catchment
-The Catchment objects takes the Maze and GeoCell arrays and generates all the parameters and structures for the stream network.
 
 ## Data
 
