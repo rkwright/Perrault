@@ -108,12 +108,11 @@ class Maze {
     /**
      * @param col - number of columns in the maze
      * @param row - number of rows in the maze
-     * @param sX - x-index of seed cell
-     * @param sY - y-index of seed cell
+     * @param seedX - x-index of seed cell
+     * @param seedY - y-index of seed cell
      */
     func create ( col : Int, row : Int, sX : Int, sY : Int ) {
        
-        print("Creating the maze")
         neighbors = [];
         maxNeighbors = 0;	// just for info's sake
 
@@ -141,8 +140,6 @@ class Maze {
      */
     func build () {
 
-        print("Building the maze")
-        
         var coord : UCoord = UCoord(x: seedX, y: seedY)
 
         repeat {
@@ -153,13 +150,13 @@ class Maze {
             //let k = getRandomInt2(min: 0, max: neighbors.count-1)
             coord = neighbors.remove(at: k)
 
-            //print(String( format: "Dissolving edge for current cell: x: %d  y: %d  k: %d",coord.x, coord.y, k))
+            print(String( format: "Dissolving edge for current cell: x: %d  y: %d  k: %d",coord.x, coord.y, k))
 
             dissolveEdge( coord: coord )
             
         } while (neighbors.count > 0)
         
-        //dumpEdges(col: nCol, row: nRow)
+        dumpEdges(col: nCol, row: nRow)
     }
 
     /**
@@ -176,8 +173,7 @@ class Maze {
         var coord : UCoord = UCoord(x: curCoord.x, y: curCoord.y)
         var nbr : UCoord = UCoord(x: 0, y:0)
 
-        //print(String(format: "Looking for neighbors of %d %d", coord.x, coord.y))
-        
+        print(String(format: "Looking for neighbors of %d %d", coord.x, coord.y))
         for  i in 0..<4  {
 
             zx = Int(coord.x) + XEdge[i];
@@ -194,7 +190,7 @@ class Maze {
                 nbr.y = zy
                 neighbors.append( nbr );
 
-                //print(String( format: "Adding to neighbors: %d  %d",zx, zy))
+                print(String( format: "Adding to neighbors: %d  %d",zx, zy))
 
                 maxNeighbors = max( maxNeighbors, neighbors.count );
             }
@@ -252,7 +248,7 @@ class Maze {
             cells[coord.y * nRow + coord.x]   ^= UInt8(EdgeBit[edg])
             cells[zy * nRow + zx] ^= UInt8(OppEdgeBit[edg])
 
-            //print(String( format: "In cell %d  %d dissolving edge %@ into cell %d %d", coord.x, coord.y, EdgeStr[edg],zx, zy))
+            print(String( format: "In cell %d  %d dissolving edge %@ into cell %d %d", coord.x, coord.y, EdgeStr[edg],zx, zy))
         }
     }
 
