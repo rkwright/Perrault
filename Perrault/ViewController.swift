@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     private var basin :         Basin!
     private var view2D : Scene2D!
     private var maz : Maze!
+    private var basinBuilt : Bool = false
 
     /*
      * ViewController life cycle
@@ -40,7 +41,11 @@ class ViewController: UIViewController {
     override func viewDidAppear( _ animated: Bool ) {
         super.viewDidAppear( animated )
         print("View appeared")
-        basin.build()
+        if (basinBuilt == false){
+            basin.build()
+            basinBuilt = true
+        }
+        
         view2D.setNeedsDisplay()
     }
 

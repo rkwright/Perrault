@@ -69,7 +69,8 @@ class MazeRat  {
         // push seed on stack
         stack.append(UCoord(x: maze!.seedX, y: maze!.seedY))
     }
-        /**
+    
+    /*
      * Solves the specified maze by using a variant of the 4x4 seed fill.
      */
     func findSolution ( xExit : Int, yExit : Int ) -> Bool	{
@@ -87,7 +88,7 @@ class MazeRat  {
         return bSuccess;
     }
 
-    /**
+    /*
      *  This func solves one step for the specified by maze by using a variant
      *  of the 4x4 seed fill.
      */
@@ -244,18 +245,17 @@ class MazeRat  {
         while ((mouseStack.count > 0) && ( !adjacent || last_step ))
 
         // if this is the end, call back and report that we are exiting the initial seed point
-        //if (last_step) {
-         //   if ( !bSingleHit && mazeEvent != nil ) {
-         //       mazeEvent( "retraceSteps", this, this.maze.seedY, this.maze.seedX, 0, -1, this.stack.length, this.bSac )
-         //   }
-
-        //}
+        if (false && last_step) {
+            if ( !singleHit && mazeEvent != nil ) {
+                mazeEvent!( "retraceSteps", maze!.seedY, maze!.seedX, 0, -1, mouseStack.count, bSac )
+            }
+        }
     }
 
     /**
      * @see com.geofx.example.erosion.MazeEvent#mazeEvent(int, int, int, int, int, boolean)
      */
     func report ( description : String, posx : Int, posy : Int, msx : Int, msy : Int, stackDepth : Int, bSac : Bool  ) {
-        print(String(format: "Report: %@  x: %d  y: %d  msx: %d  msy: %d depth: %d  bSac: %d",description, posx, posy, msx, msy, stackDepth, bSac))
+        print(String(format: "Report: %@  x: %d  y: %d   ms x: %d  msy: %d   depth: %d  bSac: %d",description, posx, posy, msx, msy, stackDepth, bSac))
     }
 }
