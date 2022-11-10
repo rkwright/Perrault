@@ -45,9 +45,7 @@ class ViewController: UIViewController {
             basin.build()
             basinBuilt = true
         }
-        
-        //basin.build()
-        
+                
         view2D.setNeedsDisplay()
     }
 
