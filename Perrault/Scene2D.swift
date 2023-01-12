@@ -30,7 +30,8 @@ class Scene2D: UIView {
     }
 
     func drawEvent ( description : String, posX : Int, posY : Int, msX : Int, msY : Int, stackDepth : Int, bSac : Bool  ) {
-          print(String(format: "DrawEvent %@  x: %d  y: %d  msx: %d  msy: %d depth: %d  bSac: %d",description, posX, posY, msX, msY, stackDepth, bSac))
+          
+        //print(String(format: "DrawEvent %@  x: %d  y: %d  msx: %d  msy: %d depth: %d  bSac: %d",description, posX, posY, msX, msY, stackDepth, bSac))
         
         let cellSize = 400 / maze!.nRow;
         let px1 = 80 + Int(Double(posX) + 0.5) * cellSize;

@@ -39,7 +39,7 @@ class ViewController: UIViewController {
 
     override func viewDidAppear( _ animated: Bool ) {
         super.viewDidAppear( animated )
-        print("View appeared")
+        print("ZZView appeared")
         
         if (basinBuilt == false) {
             basin.build()
